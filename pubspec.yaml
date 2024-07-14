@@ -1,8 +1,8 @@
-name: multi_bloc_builder
+name: multi_bloc_builder_widget
 description: '''A Flutter package that helps implement the [BLoC pattern]
 It is best used as an extension with the flutter_bloc package which already provides MultiBlocProvider , MultiBlocListenerX and MultiBlocConsumer.'''
-version: 1.0.0
-homepage:
+version: 1.0.1
+homepage: "https://github.com/zoualfkar15/multi_bloc_builder"
 
 environment:
   sdk: '>=3.4.1 <4.0.0'

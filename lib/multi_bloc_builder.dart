@@ -5,7 +5,7 @@ library multi_bloc_builder;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_bloc_builder/bloc_state.dart';
+import 'package:multi_bloc_builder_widget/bloc_state.dart';
 
 class MultiBlocBuilder extends StatefulWidget {
   final Widget Function(BuildContext, BlocStates) _builder;

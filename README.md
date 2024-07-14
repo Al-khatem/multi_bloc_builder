@@ -1,4 +1,12 @@
 # Multi Bloc Builder
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
+This plugin relies on the [flutter_multi_bloc_builder](https://pub.dev/packages/flutter_multi_bloc_builder) package. It was developed to address issues encountered with its functionality and extends support for additional features.
+
+
+
+#### Developer account on LinkedIn [Link](https://www.linkedin.com/in/zoualfkar-haydar).
 
 A Flutter package that helps implement the [BLoC pattern]
 It is best used as an extension with the [flutter_bloc](https://pub.dev/packages/flutter_bloc) package which already provides `MultiBlocProvider` , `MultiBlocListenerX` and `MultiBlocConsumer`.
@@ -77,12 +85,12 @@ MultiBlocListenerX(
 ## MultiBlocConsumer
 
 __MultiBlocConsumer__ is a Flutter widget which requires minimum one `Bloc` , a `listener` function.
-`MultiBlocListner` handles building the widget in response to new states.
+`MultiBlocConsumer` handles building the widget in response to new states.
 
-The `MultiBlocListner` requires three parameters.
+The `MultiBlocConsumer` requires three parameters.
 * `blocs`: Specify which bloc states the `MultiBlocListner` should observe for building the widget
-* `listner`: Anonymous function which have your code that listen on each state change.
-* `widget` : Required a widget like SizedBox()
+* `listener`: Anonymous function which have your code that listen on each state change.
+* `builder`: Anonymous function which returnes your custom widget tree that rebuilds on each state change.
 
 ### How to use:
 ```dart
@@ -91,18 +99,28 @@ final bloc2 = BlocProvider.of<MyBloc2>(context);
 final bloc3 = BlocProvider.of<MyBloc2>(context);
 
 MultiBlocListner(
-    blocs: [bloc1, bloc2, bloc3],
-    listener: (context, states) {
-        final state1 = states.get<MyBloc1State>();
-        final state2 = states.get<MyBloc2State>();
-        final state3 = states.get<MyBloc3State>();
-        
-        if (state1 is Loading || state2 is Loading || state3 is Loading) {
-            // ... Do Something
-        } else {
-             // ... Do Something
-        }
-    },
-    child: SizedBox.shrink()
+blocs: [bloc1, bloc2, bloc3],
+listener: (context, states) {
+final state1 = states.get<MyBloc1State>();
+final state2 = states.get<MyBloc2State>();
+final state3 = states.get<MyBloc3State>();
+
+if (state1 is Loading || state2 is Loading || state3 is Loading) {
+// ... Do Something
+} else {
+// ... Do Something
+}
+},
+builder: (context, states) {
+final state1 = states.get<MyBloc1State>();
+final state2 = states.get<MyBloc2State>();
+final state3 = states.get<MyBloc3State>();
+
+if (state1 is Loading || state2 is Loading || state3 is Loading) {
+return Text("Loading");
+} else {
+return Text("SHow some content");
+}
+}
 );
 ```
