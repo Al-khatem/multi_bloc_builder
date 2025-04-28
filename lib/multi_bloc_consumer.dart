@@ -1,5 +1,3 @@
-library multi_bloc_builder;
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +9,6 @@ class MultiBlocConsumer extends StatefulWidget {
   final List<BlocBase> _blocs;
   final bool Function(BuildContext, BlocStates)? _buildWhen;
   final bool Function(BuildContext, BlocStates)? _listenWhen;
-
 
   /// [MultiBlocConsumer] handles building a widget by observing state of variouse [Bloc]s
   /// and should be used in combination with the [flutter_bloc](https://pub.dev/packages/flutter_bloc) package.
@@ -51,20 +48,18 @@ class MultiBlocConsumer extends StatefulWidget {
   ///   }
   /// );
   /// ```
-  const MultiBlocConsumer({super.key,
+  const MultiBlocConsumer({
+    super.key,
     required List<BlocBase> blocs,
     required Function(BuildContext, BlocStates) listener,
     required Widget Function(BuildContext, BlocStates) builder,
     bool Function(BuildContext, BlocStates)? buildWhen,
-    bool Function(BuildContext, BlocStates)? listenWhen
-
-  }) :
-        _blocs = blocs,
-        _listener = listener,
-        _builder = builder,
-        _buildWhen = buildWhen,
-        _listenWhen = listenWhen;
-
+    bool Function(BuildContext, BlocStates)? listenWhen,
+  }) : _blocs = blocs,
+       _listener = listener,
+       _builder = builder,
+       _buildWhen = buildWhen,
+       _listenWhen = listenWhen;
 
   @override
   State<StatefulWidget> createState() => _MultiBlocState();
@@ -74,11 +69,9 @@ class MultiBlocConsumer extends StatefulWidget {
 class _MultiBlocState extends State<MultiBlocConsumer> {
   final List<StreamSubscription> _stateSubscriptions = [];
 
-
   /// [states] Retrieves a list of current states
   /// from all blocs managed by the widget.
-  get states=>widget._blocs.map( (bloc) => bloc.state).toList();
-
+  get states => widget._blocs.map((bloc) => bloc.state).toList();
 
   @override
   void initState() {
@@ -98,30 +91,28 @@ class _MultiBlocState extends State<MultiBlocConsumer> {
       // Store the subscription for later disposal
       _stateSubscriptions.add(subscription);
     }
-
   }
 
   /// [listenToBlocs] Listens to bloc states and triggers
   /// the listener callback based on conditions.
-  listenToBlocs(){
-    if(widget._listenWhen!=null){
+  listenToBlocs() {
+    if (widget._listenWhen != null) {
       bool listen = widget._listenWhen!(context, BlocStates(states));
 
-      if(listen) widget._listener(context, BlocStates(states));
-    }else{
+      if (listen) widget._listener(context, BlocStates(states));
+    } else {
       widget._listener(context, BlocStates(states));
     }
   }
 
-
   /// [buildBlocs] Triggers a rebuild based
   /// on conditions or unconditionally rebuilds.
-  buildBlocs(){
-    if(widget._buildWhen!=null){
+  buildBlocs() {
+    if (widget._buildWhen != null) {
       bool build = widget._buildWhen!(context, BlocStates(states));
 
-      if(build)  setState(() {});
-    }else{
+      if (build) setState(() {});
+    } else {
       setState(() {});
     }
   }
@@ -130,7 +121,6 @@ class _MultiBlocState extends State<MultiBlocConsumer> {
   Widget build(BuildContext context) {
     return widget._builder(context, BlocStates(states));
   }
-
 
   @override
   void dispose() {

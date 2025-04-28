@@ -1,5 +1,3 @@
-library multi_bloc_builder;
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,18 +35,16 @@ class MultiBlocListenerX extends StatefulWidget {
   ///   }
   /// );
   /// ```
-  const MultiBlocListenerX({super.key,
+  const MultiBlocListenerX({
+    super.key,
     required List<BlocBase> blocs,
     required Function(BuildContext, BlocStates) listener,
     required Widget child,
-    bool Function(BuildContext, BlocStates)? listenWhen
-
-  }) :
-        _blocs = blocs,
-        _listener = listener,
-        _child = child,
-        _listenWhen = listenWhen;
-
+    bool Function(BuildContext, BlocStates)? listenWhen,
+  }) : _blocs = blocs,
+       _listener = listener,
+       _child = child,
+       _listenWhen = listenWhen;
 
   @override
   State<StatefulWidget> createState() => _MultiBlocState();
@@ -58,11 +54,9 @@ class MultiBlocListenerX extends StatefulWidget {
 class _MultiBlocState extends State<MultiBlocListenerX> {
   final List<StreamSubscription> _stateSubscriptions = [];
 
-
   /// [states] Retrieves a list of current states
   /// from all blocs managed by the widget.
-  get states=>widget._blocs.map( (bloc) => bloc.state).toList();
-
+  get states => widget._blocs.map((bloc) => bloc.state).toList();
 
   @override
   void initState() {
@@ -80,28 +74,24 @@ class _MultiBlocState extends State<MultiBlocListenerX> {
       // Store the subscription for later disposal
       _stateSubscriptions.add(subscription);
     }
-
   }
 
   /// [listenToBlocs] Listens to bloc states and triggers
   /// the listener callback based on conditions.
-  listenToBlocs(){
-    if(widget._listenWhen!=null){
+  listenToBlocs() {
+    if (widget._listenWhen != null) {
       bool listen = widget._listenWhen!(context, BlocStates(states));
 
-      if(listen) widget._listener(context, BlocStates(states));
-    }else{
+      if (listen) widget._listener(context, BlocStates(states));
+    } else {
       widget._listener(context, BlocStates(states));
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return widget._child;
   }
-
 
   @override
   void dispose() {

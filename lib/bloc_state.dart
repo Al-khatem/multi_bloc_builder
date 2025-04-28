@@ -1,4 +1,3 @@
-
 /// [BlocStates] serves as a container of [dynamic] objects (usually bloc states).
 /// It is part of the [MultiBlocProvider] package and therefore mainly used
 /// to provide a varety of bloc states via the [MultiBlocBuilder._builder] function.
@@ -11,7 +10,7 @@
 class BlocStates {
   final List _stats = [];
 
-  BlocStates(List states)  {
+  BlocStates(List states) {
     _stats.addAll(states);
   }
 
@@ -22,13 +21,10 @@ class BlocStates {
   /// ```
   /// final exampeState = blocStates.get<ExampleState>();
   /// ```
-  T get<T>() => _stats.firstWhere(
-          (entry) => (entry is T),
-      orElse: () => null
-  );
+  T get<T>() => _stats.firstWhere((entry) => (entry is T), orElse: () => null);
 
   /// if you have multiple objects of save type you can use this
-  /// final state = states.getState<ExampleState>(0)
+  /// final state = states.getState\<ExampleState>(0)
   T getState<T>(int index) {
     return _stats[index];
   }
